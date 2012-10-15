@@ -5,40 +5,38 @@
 // This might not work correctly if any css properties have been attached to <html>
 // The change is persistent. i.e. It is remembered across any domain whose html width was once modified.
 
-var existing_width = $('html').width();
 // Set any pre-existing width for this domain.
 // Using sync so this data is available across browsers.
 chrome.storage.sync.get('html_width', function(items){
 	var html_width = items.html_width !== undefined ? items.html_width : false;
-    existing_width = (html_width !== false && html_width[document.domain] !== undefined) ? html_width[document.domain] : false;
+    var existing_width = (html_width !== false && html_width[document.domain] !== undefined) ? html_width[document.domain] : false;
 	$('html').css({'width': existing_width, 'margin': '0 auto'});
 });
 
-var html_width = existing_width;
 $(document).keydown(function (e) {
-	if(key_pressed('shift') && key_pressed('control')){ // Shift Control
-		if(key_pressed('+')){ // Increase html width '+'
-			$('html').css({'width': html_width + 80, 'margin': '0 auto'});
-			html_width = $('html').width();
-			save_html_width(html_width);
-		}else if(key_pressed('-')){ // Decrease html width '-'
-			$('html').css({'width': html_width - 80, 'margin': '0 auto'});
-			html_width = $('html').width();
-			save_html_width(html_width);
-		}else if(key_pressed('0')){ // Reset html width '0'
-			$('html').css({'width': 'auto', 'margin': 'auto'});
-			html_width = $('html').width();
-			save_html_width(html_width);
-		}
+	
+	if(keys_pressed('shift', 'control', '+')){
+		$('html').css({'width': $('html').width() + 80, 'margin': '0 auto'});
+		save_html_width($('html').width());
 	}
+
+	if(keys_pressed('shift', 'control', '-')){
+		$('html').css({'width': $('html').width() - 80, 'margin': '0 auto'});
+		save_html_width($('html').width());
+	}
+
+	if(keys_pressed('shift', 'control', '0')){
+		$('html').css({'width': 'auto', 'margin': 'auto'});
+		save_html_width($('html').width());
+	}
+	
 });
 
 // Save modified width to 'domain : width' pair in synced chrome storage.
-function save_html_width(width){
-	var html_width = {};
+var save_html_width = function(width){
 	chrome.storage.sync.get('html_width', function(items){
-		html_width = items !== undefined ? items : {};
+		var html_width = items !== undefined ? items : {};
+		html_width[document.domain] = width;
+		chrome.storage.sync.set({'html_width': html_width});
 	});
-	html_width[document.domain] = width;
-	chrome.storage.sync.set({'html_width': html_width});
-}
+};
