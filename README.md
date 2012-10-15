@@ -5,7 +5,6 @@ ________________________
 Installation
 ------------
 Available via chrome webstore at http://chromesomething.com
-___________________________________________________________
 
 Tools included
 --------------
@@ -24,5 +23,6 @@ Tools included
   - This works by injecting a new css file into any page thus forcing a lighter background.
   - This is also persistent.
   - To reset, hit <b>'Ctrl  i'</b> again.
-____
-####  END
+
+______________________________________________________
+#### END
