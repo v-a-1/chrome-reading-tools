@@ -1,5 +1,5 @@
 {
-  "name": "Intuitive Next and Previous",
+  "name": "Reading Tools for Chrome",
   "version": "1.0",
   "manifest_version": 2,
   "description": "Maps the navigation front and back keys to next and prev (previous) links on any page.",
@@ -15,7 +15,7 @@
         "multiple_keys_detect.js", 
         "prev_next.js", 
         "html_width.js", 
-        "invert.js"
+        "lighten.js"
       ]
     }
   ],
