@@ -1,4 +1,4 @@
-// Depends on jQuery and convert_keys.js
+// Depends on convert_keys.js
 // Keep a map of pressed keys. That way you can detect multiple key presses
 // like so: if(key_pressed('shift') && key_pressed('ctrl')){...}
 // Which also allows nested conditionals and other logical operators like ||
@@ -8,11 +8,11 @@
 // if(key_pressed('shift') && key_pressed('alt') && ...)
 var keys = {};
 
-$(document).keydown(function (e) {
+document.addEventListener('keydown', function (e) {
     keys[e.which] = true;
 });
 
-$(document).keyup(function (e) {
+document.addEventListener('keyup', function (e) {
     delete keys[e.which];
 });
 
