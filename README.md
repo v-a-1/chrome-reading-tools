@@ -4,7 +4,7 @@ ________________________
 
 Installation
 ------------
-Available via chrome webstore at http://chromesomething.com
+Available via chrome webstore at https://chrome.google.com/webstore/category/home
 
 Tools included
 --------------
