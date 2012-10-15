@@ -1,45 +1,12 @@
-// First determine if page has next and/or prev/previous text as a link to some page within the same domain.
-// If so, bind keys such that pressing ▶ will navigate to the next page and ◀ vice versa.
-
-var next_href = false;
-var prev_href = false;
-
-$('a').each(function(){
-
-	var link_text = $.trim($(this).text());
-
-	var next = link_text.match(/^(next)$/i);
-	if(next !== null){
-		next_href = $(this).attr("href");
-	}
-
-	var prev = link_text.match(/^(prev|previous)$/i);
-	if(prev !== null){
-		prev_href = $(this).attr("href");
-	}
-	
-});
-
-$(document).live('keydown', function (e) {
-	if ( e.keyCode == 39 && next_href !== false){
-		window.location = next_href;
-	}
-	if ( e.keyCode == 37 && prev_href !== false){
-		window.location = prev_href;
-	}
-});
-
 // Sometimes the text occupies the full width of the browser which is too long to read on big screens.
-// So ctrl + shift + - will reduce the width of the text without affecting it's font size.
-// ctrl + shift + + increases width (even beyond the bounds of the browser width).
-// ctrl + shift + 0 resets to original size.
+// So ctrl shift - will reduce the width of the text without affecting it's font size.
+// ctrl shift + increases width (even beyond the bounds of the browser width).
+// ctrl shift 0 resets to original size.
 // This might not work correctly if any css properties have been attached to <html>
+// The change is persistent. i.e. It is remembered across any domain whose html width was once modified.
 
-// Before anything else, check if this domain had its width previously
-// modified. If so, set that as the width;
-
-
-
+// -- Keep track of which keys have been pressed.
+// Thus enabling detection of multiple key presses.
 var keys = {};
 
 $(document).keydown(function (e) {
@@ -49,8 +16,11 @@ $(document).keydown(function (e) {
 $(document).keyup(function (e) {
     delete keys[e.which];
 });
+// -- Keys tracking end
+
 var existing_width = $('html').width();
-// Set any pre-existing width.
+// Set any pre-existing width for this domain.
+// Using sync so this data is available across browsers.
 chrome.storage.sync.get('html_width', function(items){
 	var html_width = items.html_width !== undefined ? items.html_width : false;
     existing_width = (html_width !== false && html_width[document.domain] !== undefined) ? html_width[document.domain] : false;
@@ -77,7 +47,7 @@ $(document).keydown(function (e) {
 	}
 });
 
-
+// Save modified width to 'domain : width' pair in synced chrome storage.
 function save_html_width(width){
 	var html_width = {};
 	chrome.storage.sync.get('html_width', function(items){

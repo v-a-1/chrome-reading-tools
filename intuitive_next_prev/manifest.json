@@ -9,7 +9,7 @@
   "content_scripts": [
     {
       "matches": ["*://*/*"],
-      "js": ["jquery-1.8.2.min.js", "script.js"]
+      "js": ["jquery-1.8.2.min.js", "prev_next.js", "html_width.js", "invert.js"];
     }
   ],
   "icons": { 
