@@ -6,27 +6,23 @@ var prev_href = false;
 
 // Find next/prev hrefs (if present).
 $('a').each(function(){
-
 	var link_text = $.trim($(this).text());
-
 	var next = link_text.match(/^(next)$/i);
 	if(next !== null){
 		next_href = $(this).attr("href");
 	}
-
 	var prev = link_text.match(/^(prev|previous)$/i);
 	if(prev !== null){
 		prev_href = $(this).attr("href");
 	}
-	
 });
 
 // Map right/left keys to prev/next (if links were found).
-$(document).live('keydown', function (e) {
-	if ( e.keyCode == 39 && next_href !== false){
+Keyboard.on_keys_pressed('right', function(e){
+	if (next_href !== false && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA')
 		window.location = next_href;
-	}
-	if ( e.keyCode == 37 && prev_href !== false){
+});
+Keyboard.on_keys_pressed('left', function(e){
+	if (prev_href !== false && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA')
 		window.location = prev_href;
-	}
 });
