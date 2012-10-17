@@ -13,23 +13,19 @@ chrome.storage.sync.get('html_width', function(items){
 	$('html').css({'width': existing_width, 'margin': '0 auto'});
 });
 
-$(document).keydown(function (e) {
-	
-	if(keys_pressed('shift', 'control', '+')){
-		$('html').css({'width': $('html').width() + 80, 'margin': '0 auto'});
-		save_html_width($('html').width());
-	}
+Keyboard.on_keys_pressed('shift', 'control', '+', function(e){
+	$('html').css({'width': $('html').width() + 80, 'margin': '0 auto'});
+	save_html_width($('html').width());
+});
 
-	if(keys_pressed('shift', 'control', '-')){
-		$('html').css({'width': $('html').width() - 80, 'margin': '0 auto'});
-		save_html_width($('html').width());
-	}
+Keyboard.on_keys_pressed('shift', 'control', '-', function(e){
+	$('html').css({'width': $('html').width() - 80, 'margin': '0 auto'});
+	save_html_width($('html').width());
+});
 
-	if(keys_pressed('shift', 'control', '0')){
-		$('html').css({'width': 'auto', 'margin': 'auto'});
-		save_html_width($('html').width());
-	}
-	
+Keyboard.on_keys_pressed('shift', 'control', '0', function(e){
+	$('html').css({'width': 'auto', 'margin': 'auto'});
+	save_html_width($('html').width());
 });
 
 // Save modified width to 'domain : width' pair in synced chrome storage.

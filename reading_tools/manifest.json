@@ -11,8 +11,7 @@
       "matches": ["*://*/*"],
       "js": [
         "jquery-1.8.2.min.js", 
-        "convert_keys.js", 
-        "multiple_keys_detect.js", 
+        "Keyboard.js",
         "prev_next.js", 
         "html_width.js", 
         "lighten.js"

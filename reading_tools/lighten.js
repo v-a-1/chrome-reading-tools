@@ -12,17 +12,15 @@ storage.get('lightened_domains', function(items){
 });
 
 // When user hits Ctrl i, toggle lightened colors.
-document.addEventListener('keydown', function(e){
-	if(keys_pressed('control', 'i')){
-		if(injected){
-			remove_light_css();
-			injected = false;
-			remove_domain_from_lightened_list();
-		}else{
-			inject_light_css();
-			injected = true;
-			add_domain_to_lightened_list();
-		}
+Keyboard.on_keys_pressed('control', 'i', function(e){
+	if(injected){
+		remove_light_css();
+		injected = false;
+		remove_domain_from_lightened_list();
+	}else{
+		inject_light_css();
+		injected = true;
+		add_domain_to_lightened_list();
 	}
 });
 
