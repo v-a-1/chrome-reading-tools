@@ -58,16 +58,8 @@ var Keyboard = (function(){
 	};
 
 	var keys_pressed = function(){
-		var args;
-		// If the first arg is an array, use that as a list of keys
-		if(typeof arguments[0] === 'array' || arguments[0] instanceof Array){
-			args = arguments[0];
-		}else{
-			// Otherwise args are the keys
-			args = arguments;
-		}
-		for (var i = 0; i < args.length; i++) {
-			if(!key_pressed(args[i])){
+		for (var i = 0; i < arguments.length; i++) {
+			if(!key_pressed(arguments[i])){
 				return false;
 			}
 		}
@@ -88,7 +80,7 @@ var Keyboard = (function(){
 			}
 		}
 		window.addEventListener('keydown', function(e){
-			if(keys_pressed(arg_keys)){
+			if(keys_pressed.apply(null, arg_keys)){
 				// Pass the event object back in full
 				arg_callback(e);
 			}
